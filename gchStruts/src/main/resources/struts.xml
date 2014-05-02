@@ -3,23 +3,40 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
+    <constant name="struts.ui.theme" value="css_xhtml" />
+    <constant name="struts.custom.i18n.resources" value="global"/>
     <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
     <constant name="struts.devMode" value="true"/>
+    
 
-    <include file="example.xml"/>
+    <include file="profesor.xml"/>
+    <include file="seguridad.xml"/>
 
-    <package name="default" namespace="/" extends="struts-default">
+    <package name="default" namespace="/" extends="struts-default">         
+        
+        <result-types>
+            <result-type name="tiles"
+                         class="org.apache.struts2.views.tiles.TilesResult"/>
+        </result-types>
+        <interceptors>
+            <interceptor class="pe.edu.cibertec.gchstruts.interceptors.UserLogged" 
+                         name="userSession">
+            </interceptor>            
+            <interceptor-stack name="sessionStack">
+                <interceptor-ref name="userSession"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+         <!--
+        <global-results>
+            <result name="GeneralException">/error.jsp</result>
+            <result name="login" type="redirect">/</result>
+        </global-results>
 
-        <default-action-ref name="index"/>
-
-        <action name="index">
-            <result type="redirectAction">
-                <param name="actionName">HelloWorld</param>
-                <param name="namespace">/example</param>
-            </result>
-        </action>
-
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="GeneralException"/>
+        </global-exception-mappings>    -->    
+        
     </package>
-
     <!-- Add addition packages and configuration here. -->
 </struts>

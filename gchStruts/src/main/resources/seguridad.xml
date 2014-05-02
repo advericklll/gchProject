@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>       
+    <package name="seguridad" namespace="/seguridad" extends="default">
+        <action name="*Login" 
+                 class="pe.edu.cibertec.gchstruts.action.LoginAction" 
+                 method="{1}">
+            <result name="login">/seguridad/login.jsp</result>
+            <result type="tiles">principal</result>  
+            <result name="input">/seguridad/login.jsp</result>    
+        </action>
+        
+        <action name="home" 
+                class="pe.edu.cibertec.gchstruts.action.LoginAction" 
+                method="home">
+            <result type="tiles">principal</result>
+            <interceptor-ref name="sessionStack"/>           
+        </action>       
+    </package>
+</struts>

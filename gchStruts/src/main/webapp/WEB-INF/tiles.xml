@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration
+2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<tiles-definitions>
+    <definition name="principal" 
+                template="/plantillas/plantilla.jsp">
+        <put-attribute name="cabecera"
+                       value="/comun/cabecera.jsp"/>
+        <put-attribute name="menu"
+                       value="/comun/menu.jsp"/>
+        <put-attribute name="cuerpo"
+                       value="/principal.jsp"/>
+        <put-attribute name="pie"
+                       value="/comun/pie.jsp"/>                
+    </definition>
+    
+    
+    <definition name="adminProfesor" extends="principal">
+        <put-attribute name ="cuerpo"
+                       value="/profesor/create.jsp"/>        
+    </definition>    
+ 
+    <definition name="detalleProfesor" extends="principal">
+        <put-attribute name ="cuerpo"
+                       value="/profesor/details.jsp"/>        
+    </definition>
+    
+    <definition name="listarProfesor" extends="principal">
+        <put-attribute name ="cuerpo"
+                       value="/profesor/list.jsp"/>        
+    </definition> 
+
+</tiles-definitions>
+    

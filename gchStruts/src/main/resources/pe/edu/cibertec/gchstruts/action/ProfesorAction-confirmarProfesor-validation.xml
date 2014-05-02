@@ -1,0 +1,62 @@
+<!DOCTYPE validators PUBLIC 
+ "-//Apache Struts//XWork Validator 1.0.2//EN" 
+ "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+
+<validators>   
+    <field name="profesor.nombres">
+        <field-validator type="requiredstring">
+            <message key="profesor.field.required"/>
+        </field-validator>
+        <field-validator type="stringlength">
+            <param name="maxLength">25</param>
+            <message key="profesor.field.maxLength"/>
+        </field-validator>        
+    </field>
+    <field name="profesor.apellidoPaterno">
+        <field-validator type="requiredstring">
+            <message key="profesor.field.required"/>
+        </field-validator>
+        <field-validator type="stringlength">
+            <param name="maxLength">40</param>
+            <message key="profesor.field.maxLength"/>
+        </field-validator>   
+    </field>
+    <field name="profesor.apellidoMaterno">
+        <field-validator type="requiredstring">
+            <message key="profesor.field.required"/>
+        </field-validator>
+        <field-validator type="stringlength">
+            <param name="maxLength">40</param>
+            <message key="profesor.field.maxLength"/>
+        </field-validator>   
+    </field>
+    <field name="profesor.direccion">
+        <field-validator type="requiredstring">
+            <message key="profesor.field.required"/>
+        </field-validator>
+    </field>
+    <field name="profesor.telefono1">
+        <field-validator type="required">
+            <message key="profesor.field.required"/>
+        </field-validator>
+        <field-validator type="regex">
+            <param name="expression">[0-9]*</param>
+            <message key="profesor.field.numbers"/>
+        </field-validator>       
+    </field>  
+    <field name="profesor.email1">
+        <field-validator type="requiredstring">
+            <message key="profesor.field.required"/>
+        </field-validator>
+        <field-validator type="email">
+            <message key="profesor.field.format"/>
+        </field-validator>
+    </field>
+    
+    <field name="profesor.fechaNacimiento">
+        <field-validator type="required">
+            <message key="profesor.field.required"/>
+        </field-validator>
+    </field>
+           
+</validators>

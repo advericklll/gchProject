@@ -1,9 +1,15 @@
 package pe.edu.cibertec.gchhibernate.dao;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 import pe.edu.cibertec.gchhibernate.modelo.Profesor;
+import pe.edu.cibertec.gchhibernate.util.PersistenceUtil;
 
 public class ProfesorDaoImpl implements ProfesorDao {
     
@@ -11,91 +17,110 @@ public class ProfesorDaoImpl implements ProfesorDao {
 
     @Override
     public void registrar(Profesor profesor) {
-        int nextCodigo=1;
-        if (!Contenedor.PROFESORES.isEmpty())
-        {
-            nextCodigo = Integer.parseInt(Contenedor.PROFESORES.get(Contenedor.PROFESORES.size()-1).getCodigo().toString())+1;
-        }        
-        profesor.setCodigo(""+nextCodigo);
-        Contenedor.PROFESORES.add(profesor);
+        EntityManager em=PersistenceUtil.getEmf().createEntityManager();
+        em.getTransaction().begin();
+        
+        em.persist(profesor);
+        em.getTransaction().commit();
+        em.close();
     }
 
     @Override
     public void actualizar(Profesor profesor) {
-        Contenedor.PROFESORES.set(searchByCodigo(profesor.getCodigo()), profesor);
+        EntityManager em=PersistenceUtil.getEmf().createEntityManager();
+        em.getTransaction().begin();
+        
+        em.merge(profesor);
+        em.getTransaction().commit();
+        em.close();
     }
 
     @Override
-    public void eliminarSegun(String codigo) {
-        Contenedor.PROFESORES.remove(searchByCodigo(codigo));
+    public void eliminarSegun(Integer codigo) {
+        EntityManager em=PersistenceUtil.getEmf().createEntityManager();
+        em.getTransaction().begin();
+        
+        Profesor profesor = (Profesor) em.find(Profesor.class, codigo);
+        em.remove(profesor);
+        em.getTransaction().commit();
+        em.close();
     }
 
     @Override
     public List<Profesor> listarTodo() {
-        return Contenedor.PROFESORES;
-    }
+        EntityManager em=PersistenceUtil.getEmf().createEntityManager();
 
-    @Override
-    public List<Profesor> listarSegun(String nombres, String apellidoPaterno, String apellidoMaterno) {
-        List<Profesor> profesores = new LinkedList();
-        for (Profesor profesor : Contenedor.PROFESORES) {
-            boolean nombreCoincide = nombres == null 
-                    || nombres.isEmpty()
-                    || profesor.getNombres().toLowerCase(Locale.ENGLISH)
-                    .contains(nombres.toLowerCase(Locale.ENGLISH));
-            boolean apellidoPaternoCoincide = apellidoPaterno == null 
-                    || apellidoPaterno.isEmpty()
-                    || profesor.getApellidoPaterno().toLowerCase(Locale.ENGLISH)
-                    .contains(apellidoPaterno.toLowerCase(Locale.ENGLISH));
-            boolean apellidoMaternoCoincide = apellidoMaterno == null 
-                    || apellidoMaterno.isEmpty() 
-                    || profesor.getApellidoMaterno().toLowerCase(Locale.ENGLISH)
-                    .contains(apellidoMaterno.toLowerCase(Locale.ENGLISH));
-            if (nombreCoincide && apellidoPaternoCoincide && apellidoMaternoCoincide) {
-                profesores.add(profesor);
-            }
-        }
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Profesor> cq = cb.createQuery(Profesor.class);
+        Root<Profesor> profesorRoot = cq.from(Profesor.class);
+        cq.select(profesorRoot);
+
+        TypedQuery<Profesor> typedQuery = em.createQuery(cq);
+
+        List<Profesor> profesores = typedQuery.getResultList();
+        em.close();
+        
         return profesores;
     }
 
     @Override
-    public Profesor obtenerSegun(String codigo) {
-        return Contenedor.PROFESORES.get(searchByCodigo(codigo));
+    public List<Profesor> listarSegun(String nombres, String apellidoPaterno, String apellidoMaterno) {
+        EntityManager em=PersistenceUtil.getEmf().createEntityManager();
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Profesor> cq = cb.createQuery(Profesor.class);
+        Root<Profesor> profesorRoot = cq.from(Profesor.class);
+        
+        ParameterExpression<String> p1 = cb.parameter(String.class);
+        ParameterExpression<String> p2 = cb.parameter(String.class);
+        ParameterExpression<String> p3 = cb.parameter(String.class);
+        
+        Expression<String> nombres1 = profesorRoot.get("nombres");
+        Expression<String> apellidoPat = profesorRoot.get("apellidoPat");
+        Expression<String> apellidoMat = profesorRoot.get("apellidoMaterno");
+
+        cq.where(                
+                cb.like(nombres1, p1),
+                cb.and(cb.like(apellidoPat, p2)),
+                cb.and(cb.like(apellidoMat, p3))                
+        );        
+        
+        cq.select(profesorRoot);
+
+        TypedQuery<Profesor> typedQuery = em.createQuery(cq);
+        
+        typedQuery.setParameter(p1, nombres+"%");
+        typedQuery.setParameter(p2, apellidoPaterno+"%");
+        typedQuery.setParameter(p3, apellidoMaterno+"%");
+
+        List<Profesor> profesores = typedQuery.getResultList();
+        em.close();
+        
+        return profesores;
     }
 
-    private static class Contenedor {
+    @Override
+    public Profesor obtenerSegun(Integer codigo) {
+        EntityManager em=PersistenceUtil.getEmf().createEntityManager();
 
-        private static List<Profesor> PROFESORES = new LinkedList<Profesor>();
-    }
-    
-    private int searchByCodigo(String codigo){
-        int i=-1;
-       for (Profesor unProfesor : Contenedor.PROFESORES){
-           if (codigo.equals(unProfesor.getCodigo()))
-               i= Contenedor.PROFESORES.indexOf(unProfesor);
-       }
-       return i;
-    }
-    
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Profesor> cq = cb.createQuery(Profesor.class);
+        Root<Profesor> profesorRoot = cq.from(Profesor.class);
+        cq.where(cb.equal(profesorRoot.get("codigo"), codigo));
+        cq.select(profesorRoot);
+
+        TypedQuery<Profesor> typedQuery = em.createQuery(cq);
+        
+        Profesor profesor = typedQuery.getSingleResult();
+        
+        em.close();
+        
+        return profesor;
+    }   
+        
    protected ProfesorDaoImpl() {
       // Exists only to defeat instantiation.
-       ProfesorBuilder builder = new ProfesorBuilder();
-       Profesor A= builder.withCodigo("1").withNombre("Fransico").withApePat("Verastegui")
-               .withApeMat("_").withEmail("fverastegui@gmail.com").withSexo("M").build();
-       Contenedor.PROFESORES.add(A);
-       builder.reset();
-       Profesor B= builder.withCodigo("2").withNombre("Lucas").withApePat("Manrique")
-               .withApeMat("Villa").withEmail("sagitario1lm@gmail.com").withSexo("M").build();
-       Contenedor.PROFESORES.add(B);
-       builder.reset();
-       Profesor C= builder.withCodigo("3").withNombre("Alvaro").withApePat("Rodas")
-               .withApeMat("Vasquez").withEmail("avasquez@gmail.com").withSexo("M").build();
-       Contenedor.PROFESORES.add(C);
-       builder.reset();
-       Profesor D= builder.withCodigo("4").withNombre("Mila").withApePat("Kunis")
-               .withApeMat("G").withEmail("mkunis@gmail.com").withSexo("F").build();      
-       Contenedor.PROFESORES.add(D);
-       builder.reset();
+       
    }
    
    //initiate using singleton 

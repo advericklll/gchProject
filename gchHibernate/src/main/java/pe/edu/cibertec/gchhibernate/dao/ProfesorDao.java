@@ -12,9 +12,9 @@ public interface ProfesorDao {
     
     void registrar(Profesor profesor);
     void actualizar(Profesor profesor);
-    void eliminarSegun(String codigo);
+    void eliminarSegun(Integer codigo);
     List<Profesor> listarTodo();
     List<Profesor> listarSegun(String nombre, String apellidoPaterno, String apellidoMaterno);
-    Profesor obtenerSegun(String codigo);
+    Profesor obtenerSegun(Integer codigo);
 
 }

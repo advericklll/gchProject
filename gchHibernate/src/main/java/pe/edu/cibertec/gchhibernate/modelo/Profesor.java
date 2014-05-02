@@ -5,26 +5,55 @@ import java.io.Serializable;
 /**
  * Representa a un docente de la institucion.
  */
+import java.util.Date;
+import javax.persistence.*;
 
+@Entity
+@Table(name="TAB_PROFESSOR")
 public class Profesor implements Serializable{
 
-    private String codigo;
-    private String nombres;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    private String direccion;
-    private String referencia;
-    private String telefono1;
-    private String telefono2;//celular   
-    private String email1;
-    private String email2;   
-    private String fechaNacimiento;
-    private String sexo;
-    private String estadoCivil;
+    @Id 
+    @Column(name="IDENTIFIER")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer codigo;
     
-    public Profesor(){
-        
-    }
+    @Column(name="FIRSTNAME")
+    private String nombres;
+    
+    @Column(name="MIDLENAME")
+    private String apellidoPaterno;
+    
+    @Column(name="LASTNAME")
+    private String apellidoMaterno;
+    
+    @Column(name="ADDRESS")
+    private String direccion;
+    
+    @Column(name="REFERENCE")
+    private String referencia;
+    
+    @Column(name="PHONE1")
+    private long telefono1;
+    
+    @Column(name="PHONE2")
+    private long telefono2;//celular   
+    
+    @Column(name="EMAIL1")
+    private String email1;
+    
+    @Column(name="EMAIL2")
+    private String email2;  
+
+    @Column(name="BIRTHDATE")
+    private String fechaNacimiento;
+    
+    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name="GENRE",referencedColumnName="IDENTIFIER")
+    private Genero genero;
+    
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="STATE",referencedColumnName="IDENTIFIER")
+    private Estado estadoCivil;
     
     public String getNombres() {
         return nombres;
@@ -64,23 +93,7 @@ public class Profesor implements Serializable{
 
     public void setReferencia(String referencia) {
         this.referencia = referencia;
-    }
-
-    public String getTelefono1() {
-        return telefono1;
-    }
-
-    public void setTelefono1(String telefono1) {
-        this.telefono1 = telefono1;
-    }
-
-    public String getTelefono2() {
-        return telefono2;
-    }
-
-    public void setTelefono2(String telefono2) {
-        this.telefono2 = telefono2;
-    }
+    }    
 
     public String getEmail1() {
         return email1;
@@ -104,29 +117,51 @@ public class Profesor implements Serializable{
 
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
+    }   
 
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public String getEstadoCivil() {
-        return estadoCivil;
-    }
-
-    public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
-    }
-
-    public String getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
+    }
+
+    public long getTelefono1() {
+        return telefono1;
+    }
+
+    public void setTelefono1(long telefono1) {
+        this.telefono1 = telefono1;
+    }
+
+    public long getTelefono2() {
+        return telefono2;
+    }
+
+    public void setTelefono2(long telefono2) {
+        this.telefono2 = telefono2;
+    }
+
+    public Genero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
+
+    public Estado getEstadoCivil() {
+        return estadoCivil;
+    }
+
+    public void setEstadoCivil(Estado estadoCivil) {
+        this.estadoCivil = estadoCivil;
+    }    
+    
+    
+    @Override
+    public String toString() {
+        return "Profesor{" + "codigo=" + codigo + ", nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", direccion=" + direccion + ", referencia=" + referencia + ", telefono1=" + telefono1 + ", telefono2=" + telefono2 + ", email1=" + email1 + ", email2=" + email2 + ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero + ", estadoCivil=" + estadoCivil + '}';
     }
 }

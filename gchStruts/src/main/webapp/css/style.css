@@ -1,0 +1,167 @@
+@charset "utf-8";
+/* ------------------------------------------------------ Global */
+*{
+	padding: 0;
+	margin: 0;
+	list-style:none outside none;
+	border-collapse:collapse;
+	
+	letter-spacing: 0.02em;	
+	font-family:Arial, Helvetica, sans-serif;
+	
+}
+/* ------------------------------------------------------ HTML */
+body{	
+	background-color: #fff;
+	font-size: 70.5%;
+	margin: 0px;
+	color: #333;
+}
+a{ color:#06C; text-decoration:none; }
+a:hover{ cursor: pointer; }
+h1{	
+	font-weight:500;
+	padding: 3px 0 3px 0;
+}
+li{	list-style:none outside none; }
+table{ display:block; border-collapse:collapse; }
+td{}
+p{ text-align:justify; }
+img{ border: 0 }
+input[type=text],input[type=password], textarea{
+	height: 32px;
+	padding: 0 5px 0 5px;
+	font-size: 14px;
+}
+select{
+	height: 32px;
+	padding: 7px 5px 0 5px;
+	font-size: 14px;
+	
+}
+/* ------------------------------------------------------ class */
+.caja {
+	display: block;
+	width: 900px;
+	height: auto;
+	position:relative;
+	margin: 0 auto 0 auto;
+}
+.error{
+	background-color:#FDFDE0;
+	color:#685633;
+	font-size:14px;
+	border: 5px solid #E4E1A5;
+	padding: 10px;
+}
+.respuestas{
+	background-color:#E4E4E4;
+	width: 870px;
+	border: 1px solid #ccc;
+	padding: 3px 0 3px 10px;
+	margin: 3px 0 6px 0;
+	color:#090;
+}
+.respuestas p{
+	display:block;
+
+}
+a.btn, .btn{
+	background-color:#09F;
+	font-size: 12px;
+	font-weight:600;
+	color:#FFF;
+	padding: 7px 10px 7px 10px;		
+}
+a.btn:hover{
+	background-color:#46B5FF;
+	color:#FFF;
+}
+a.btnhover, .btnhover{
+	background-color:#006FB9;
+	font-size: 12px;
+	font-weight:600;
+	color:#FFF;
+	padding: 7px 10px 7px 10px;
+}
+/* ------------------------------------------------------ web */
+#login{
+	/*background:url(images/login.png) no-repeat 0 -35px;*/
+        background-color: #006EB6;
+      	border: 10px outset #cccccc; 
+        border-radius:25px;
+	width: 280px;
+	height: 190px;
+	padding: 15px 0 0 0;
+	margin-top: 100px;
+}
+#login table{
+	width: 220px;
+	position:relative;
+	margin: 0 auto 0 auto;
+	color:#FFF;
+}
+#login table td{
+	height: 25px;	
+}
+#barHeader{
+	//background:url(../img/bg.jpg);
+	height: 45px;
+	padding: 5px 0 0 0;
+}
+#barHeader #logo{
+	background:url(/gchStruts2/images/login.png);
+	width: 121px;
+	height: 35px;
+	overflow:hidden;
+	line-height: 150px;
+}
+#barHeader #usuario{
+	width: 350px;
+	float:right;
+	text-align:right;
+	color:#FFF;
+	font-size:13px;
+	margin: 10px 0 0 0;
+}
+#barBody #contenido, .canvas{
+	
+	padding: 10px;
+	overflow:hidden;
+}
+#barBody #contenido #menu li a{
+	background:url(../img/bg.jpg);
+	display:block;
+	color:#fff;
+	font-size:16px;
+	margin: 5px 0 5px 0;
+	padding: 10px 6px 10px 20px;
+}
+#barBody #contenido #menu li a:hover{
+	background:#006EB6;	
+}
+#barBody #contenido #menu li a span.btn{
+	float:right;
+	margin-top: -4px;
+}
+div.subMenu{
+	display:block;
+	padding: 10px 0 10px 0;
+}
+div.canvas{
+	background-color:#FFF;
+	display:block;
+	clear:both;
+}
+div.canvas ul.list li{
+
+	display:block;
+	/*border-bottom: 1px solid #CCC;*/
+	height:20px;
+	padding-top: 5px;
+
+}
+#fo li{
+	display:block;
+	padding: 3px 0 3px 0;
+}
