@@ -7,7 +7,7 @@
   <packaging>pom</packaging>
   <name>gchProject</name>
   <modules>
-    <module>gchStruts</module>
     <module>gchHibernate</module>
+    <module>gchStruts</module>
   </modules>
 </project>
