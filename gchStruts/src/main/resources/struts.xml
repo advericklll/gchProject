@@ -27,7 +27,7 @@
                 <interceptor-ref name="defaultStack"/>
             </interceptor-stack>
         </interceptors>
-         <!--
+        
         <global-results>
             <result name="GeneralException">/error.jsp</result>
             <result name="login" type="redirect">/</result>
@@ -35,7 +35,7 @@
 
         <global-exception-mappings>
             <exception-mapping exception="java.lang.Exception" result="GeneralException"/>
-        </global-exception-mappings>    -->    
+        </global-exception-mappings>   
         
     </package>
     <!-- Add addition packages and configuration here. -->

@@ -28,7 +28,7 @@ public class EstadoService {
 
     public EstadoService() {
         estadoDao = EstadoDaoImpl.getInstance();
-        System.out.println("Se establecio una conexion Local");
+        //System.out.println("Se establecio una conexion Local");
     } 
     
     public void construct() {

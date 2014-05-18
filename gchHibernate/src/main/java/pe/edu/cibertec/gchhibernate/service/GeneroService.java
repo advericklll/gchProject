@@ -20,7 +20,7 @@ public class GeneroService {
 
     public GeneroService() {
         generoDao = GeneroDaoImpl.getInstance();
-        System.out.println("Se establecio una conexion Local");
+        //System.out.println("Se establecio una conexion Local");
     }
 
     public GeneroDao getGeneroDao() {
